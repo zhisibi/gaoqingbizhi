@@ -14,38 +14,44 @@ function is_https() {
 <html>
 <head>
 <style>
-/* 核心：确保文字在屏幕正中央绝对居中 */
+/* 默认状态下的 walBox（首页壁纸模式）保持原样或相对定位 */
 #walBox {
-    position: fixed !important; /* 使用固定定位 */
-    top: 50% !important;        /* 垂直居中起点 */
-    left: 50% !important;       /* 水平居中起点 */
-    transform: translate(-50%, -50%) !important; /* 偏移自身宽高的一半，实现真居中 */
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+/* 当处于“每日一言”模式时，通过父级类名控制居中 */
+body.hitokoto-mode #walBox {
+    position: fixed !important; 
+    top: 50% !important;        
+    left: 50% !important;       
+    transform: translate(-50%, -50%) !important; 
     
     width: auto !important;
-    min-width: 80vw;            /* 保证文字有足够的展开空间 */
+    min-width: 80vw;            
     height: auto !important;
     
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     
-    z-index: 9999;              /* 确保在最上层 */
-    pointer-events: none;       /* 允许点击穿透 */
+    z-index: 9999;              
+    pointer-events: none;       
     margin: 0 !important;
     padding: 0 !important;
 }
 
-/* 每日一言内部容器 */
+/* 每日一言内容容器 */
 .hitokoto-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    
     width: 100%;
     text-align: center;
     pointer-events: auto;
@@ -59,13 +65,9 @@ function is_https() {
     padding: 0 20px;
     display: block;
     line-height: 1.2;
-    
-    /* 渐变色 */
     background: linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    
-    /* 增强可读性 */
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
 }
 
@@ -89,29 +91,18 @@ function is_https() {
 }
 
 @keyframes centerZoomIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
-    #line-en {
-        font-size: 32px;
-    }
-    #line-cn {
-        font-size: 18px;
-    }
-    #walBox {
-        width: 95vw !important;
-    }
+    #line-en { font-size: 32px; }
+    #line-cn { font-size: 18px; }
+    body.hitokoto-mode #walBox { width: 95vw !important; }
 }
 </style>
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -129,7 +120,7 @@ function is_https() {
 </head>
 <body>
 <nav class="navbar navbar-expand-sm xben-nav  navbar-light fixed-top">
-    <a class="navbar-brand xben-title" href="https://www.yydsym.com" >在线壁纸</a>
+   
     <button class="navbar-toggler xben-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
