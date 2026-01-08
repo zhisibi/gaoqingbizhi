@@ -14,51 +14,105 @@ function is_https() {
 <html>
 <head>
 <style>
-/* 每日一句容器样式 - 清新毛玻璃风格 */
+/* 核心：确保文字在屏幕正中央绝对居中 */
+#walBox {
+    position: fixed !important; /* 使用固定定位 */
+    top: 50% !important;        /* 垂直居中起点 */
+    left: 50% !important;       /* 水平居中起点 */
+    transform: translate(-50%, -50%) !important; /* 偏移自身宽高的一半，实现真居中 */
+    
+    width: auto !important;
+    min-width: 80vw;            /* 保证文字有足够的展开空间 */
+    height: auto !important;
+    
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    z-index: 9999;              /* 确保在最上层 */
+    pointer-events: none;       /* 允许点击穿透 */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 每日一言内部容器 */
 .hitokoto-container {
-    padding: 80px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    
+    width: 100%;
     text-align: center;
-    color: #333; /* 文字改为深灰色，更清新 */
-    
-    /* 清新毛玻璃效果 */
-    background: rgba(255, 255, 255, 0.4); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
-    
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    margin: 40px auto;
-    max-width: 800px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* 淡淡的阴影 */
+    pointer-events: auto;
 }
 
+/* 放大主句并设置彩色渐变 */
 #line-en {
-    font-size: 26px;
-    font-weight: 500;
-    margin-bottom: 20px;
+    font-size: 68px; 
+    font-weight: 900;
+    margin-bottom: 30px;
+    padding: 0 20px;
     display: block;
-    line-height: 1.5;
-    /* 给文字加一点微弱的亮光感 */
-    text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+    line-height: 1.2;
+    
+    /* 渐变色 */
+    background: linear-gradient(135deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* 增强可读性 */
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
 }
 
+/* 来源文字样式 */
 #line-cn {
-    font-size: 16px;
-    color: #666;
-    letter-spacing: 1px;
-    font-style: italic;
+    font-size: 24px;
+    color: #444;
+    letter-spacing: 4px;
+    font-weight: 500;
+    opacity: 0.8;
 }
 
-/* 入场动画效果 */
+#line-cn::before {
+    content: "——";
+    margin-right: 15px;
+}
+
+/* 动画效果 */
 .animate__fadeIn {
-    animation: fadeIn 1s ease-in-out;
+    animation: centerZoomIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes centerZoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    #line-en {
+        font-size: 32px;
+    }
+    #line-cn {
+        font-size: 18px;
+    }
+    #walBox {
+        width: 95vw !important;
+    }
 }
 </style>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>高清壁纸</title>
